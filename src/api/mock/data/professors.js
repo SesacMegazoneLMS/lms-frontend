@@ -1,7 +1,7 @@
 import { scheduleStrings } from './schedules';
 export const professors = [
   {
-    id: 'prof001',
+    id: 'PROF001',
     name: '김교수',
     email: 'kim@university.ac.kr',
     department: '컴퓨터공학과',
