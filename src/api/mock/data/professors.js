@@ -18,7 +18,8 @@ export const professors = [
         room: '공학관 401호',
         description: '웹 개발의 기초를 배우는 과목',
         category: 'MAJOR_REQUIRED',
-        semester: '2024-1',
+        year: '2024',
+        semester: '1',
         status: 'active',
         progress: 85,
         attendance: 92
@@ -35,7 +36,8 @@ export const professors = [
         room: '공학관 B02호',
         description: '프로그래밍 실습 과목',
         category: 'MAJOR_ELECTIVE',
-        semester: '2024-1',
+        year: '2024',
+        semester: '1',
         status: 'active',
         progress: 55,
         attendance: 90

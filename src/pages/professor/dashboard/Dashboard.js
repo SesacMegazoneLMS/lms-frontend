@@ -20,10 +20,15 @@ const Dashboard = () => {
   });
 
   const fetchDashboardData = useCallback(async () => {
+    if (!user?.id) return;
+
     try {
       setLoading(true);
+      const currentYear = new Date().getFullYear();
+      const currentSemester = '1'; // 또는 현재 학기에 맞게 로직 추가
+
       const [coursesData, scheduleData, noticesData, todosData, statsData] = await Promise.all([
-        courseAPI.getProfessorCourses(), // API 호출
+        courseAPI.getProfessorCourses(user.id, currentYear, currentSemester),
         professorAPI.getWeeklySchedule(),
         professorAPI.getNotices(),
         professorAPI.getTodos(),

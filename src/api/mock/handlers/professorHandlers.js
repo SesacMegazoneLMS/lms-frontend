@@ -156,5 +156,36 @@ export const professorHandlers = [
   http.get('/api/professors/dashboard/todos', async () => {
     const todos = await professorAPI.getTodos()
     return HttpResponse.json(todos)
+  }),
+
+  // 교수의 강의 목록 조회 (학기별)
+  http.get('/api/professor/:professorId/courses', ({ params, request }) => {
+    try {
+      const { professorId } = params;
+      const url = new URL(request.url);
+      const year = url.searchParams.get('year');
+      const semester = url.searchParams.get('semester');
+
+      const professor = professors.find(p => p.id === professorId);
+
+      if (!professor) {
+        return new HttpResponse(
+          JSON.stringify({ message: '교수를 찾을 수 없습니다.' }),
+          { status: 404 }
+        );
+      }
+
+      const filteredCourses = professor.courses.filter(course =>
+        course.year === parseInt(year) &&
+        course.semester === semester
+      );
+
+      return HttpResponse.json(filteredCourses);
+    } catch (error) {
+      return new HttpResponse(
+        JSON.stringify({ message: '강의 목록 조회에 실패했습니다.' }),
+        { status: 500 }
+      );
+    }
   })
 ]

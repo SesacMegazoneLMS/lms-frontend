@@ -1,86 +1,39 @@
-import { professors } from '../mock/data/professors'
-import { courses } from '../mock/data/courses'
+import axios from 'axios';
+
+const BASE_URL = 'http://localhost:8081'; // 백엔드 서버 주소
 
 export const courseAPI = {
-  // 모든 강의 조회
-  getAllCourses: async (filters = {}) => {
-    const params = new URLSearchParams(filters);
-    const response = await fetch(`/api/courses?${params}`);
-    if (!response.ok) throw new Error('Failed to fetch courses');
-    return response.json();
-  },
+  // 교수의 강의 목록 조회
+  getProfessorCourses: async (professorId, year, semester) => {
+    try {
+      if (!professorId) throw new Error('교수 ID가 필요합니다');
+      const response = await axios.get(`${BASE_URL}/api/professor/${professorId}/courses`, {
+        params: {
+          year,
+          semester
+        }
+      });
 
-  // 특정 강의 조회
-  getCourses: async () => {
-    const response = await fetch(`/api/courses/`);
-    if (!response.ok) throw new Error('Failed to fetch course');
-    return response.json();
+      // 응답 데이터가 배열인지 확인
+      const courses = Array.isArray(response.data) ? response.data : [];
+
+      // 현재 로그인한 교수의 강의만 필터링
+      return courses.filter(course => course.professorId === professorId);
+    } catch (error) {
+      console.error('Error in getProfessorCourses:', error);
+      throw error;
+    }
   },
 
   // 특정 강의 상세 조회
   getCourse: async (courseId) => {
     try {
-      const response = await fetch(`/api/courses/${courseId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch course details');
-      }
-      return response.json();
+      const response = await axios.get(`${BASE_URL}/api/courses/${courseId}`);
+      return response.data;
     } catch (error) {
       console.error('Error in getCourse:', error);
-      throw new Error('Failed to fetch course details');
+      throw error;
     }
-  },
-
-  // 교수의 강의 목록 조회
-  getProfessorCourses: async () => {
-    try {
-      const currentProfessor = professors[0]
-      if (!currentProfessor?.courses) {
-        return []
-      }
-      return currentProfessor.courses
-    } catch (error) {
-      console.error('Error in getProfessorCourses:', error)
-      throw new Error('Failed to fetch professor courses')
-    }
-  },
-
-  // 새 강의 생성
-  createCourse: async (courseData) => {
-    const response = await fetch('/api/courses', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(courseData)
-    });
-    if (!response.ok) throw new Error('Failed to create course');
-    return response.json();
-  },
-
-  // 강의 정보 수정
-  updateCourse: async (id, updates) => {
-    const response = await fetch(`/api/courses/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updates)
-    });
-    if (!response.ok) throw new Error('Failed to update course');
-    return response.json();
-  },
-
-  // 강의 삭제
-  deleteCourse: async (id) => {
-    const response = await fetch(`/api/courses/${id}`, {
-      method: 'DELETE'
-    });
-    if (!response.ok) throw new Error('Failed to delete course');
-    return response.json();
-  },
-
-  // 강의 수강생 목록 조회
-  getCourseStudents: async (courseId) => {
-    const response = await fetch(`/api/courses/${courseId}/enrollments`);
-    if (!response.ok) throw new Error('Failed to fetch course students');
-    return response.json();
   }
 };
 
