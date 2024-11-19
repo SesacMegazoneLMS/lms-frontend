@@ -17,6 +17,21 @@ export const courseAPI = {
     return response.json();
   },
 
+  // 모든 강의 조회
+  getAllCourses: async (filters = {}) => {
+    const params = new URLSearchParams(filters);
+    const response = await fetch(`/api/courses?${params}`);
+    if (!response.ok) throw new Error('Failed to fetch courses');
+    return response.json();
+  },
+
+  // 특정 강의 조회
+  getCourses: async () => {
+    const response = await fetch(`/api/courses/`);
+    if (!response.ok) throw new Error('Failed to fetch course');
+    return response.json();
+  },
+
   // 특정 강의 상세 조회
   getCourse: async (courseId) => {
     try {
@@ -25,6 +40,7 @@ export const courseAPI = {
         throw new Error('Failed to fetch course details');
       }
       return response.json();
+
     } catch (error) {
       console.error('Error in getCourse:', error);
       throw new Error('Failed to fetch course details');
