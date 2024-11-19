@@ -7,7 +7,6 @@ import { professorHandlers } from './handlers/professorHandlers';
 import { studentHandlers } from './handlers/studentHandlers';
 import { systemHandlers } from './handlers/systemHandlers';
 import { userHandlers } from './handlers/userHandlers';
-import { gradeHandlers } from './handlers/gradeHandlers';
 
 // 모든 핸들러를 하나의 배열로 결합
 const handlers = [
@@ -18,7 +17,6 @@ const handlers = [
   ...studentHandlers,
   ...systemHandlers,
   ...userHandlers,
-  ...gradeHandlers,
 ];
 
 // MSW 서버 설정

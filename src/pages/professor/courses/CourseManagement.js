@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { courseAPI } from '../../../api/services';
-import { useAuth } from '../../../context/AuthContext';
 
 const CourseManagement = () => {
-  const { user } = useAuth();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,8 +15,7 @@ const CourseManagement = () => {
   const fetchCourses = async () => {
     try {
       setLoading(true);
-      const [year, semester] = selectedSemester.split('-');
-      const data = await courseAPI.getProfessorCourses(user.id, year, semester);
+      const data = await courseAPI.getProfessorCourses(selectedSemester);
       setCourses(data);
     } catch (err) {
       setError('강의 목록을 불러오는데 실패했습니다.');
@@ -46,7 +43,7 @@ const CourseManagement = () => {
     if (typeof schedule === 'string') {
       return schedule;
     }
-
+    
     // schedule이 배열인 경우
     if (Array.isArray(schedule)) {
       const dayMap = {
@@ -56,12 +53,12 @@ const CourseManagement = () => {
         THU: '목',
         FRI: '금'
       };
-
-      return schedule.map(s =>
+      
+      return schedule.map(s => 
         `${dayMap[s.day]} ${s.startTime}-${s.endTime} (${s.room})`
       ).join(', ');
     }
-
+    
     // schedule이 undefined이거나 다른 형식인 경우
     return '일정 없음';
   };
@@ -105,8 +102,8 @@ const CourseManagement = () => {
                       <div className="ml-2 flex-shrink-0 flex">
                         <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                           {course.category === 'MAJOR_REQUIRED' ? '전공필수' :
-                            course.category === 'MAJOR_ELECTIVE' ? '전공선택' :
-                              course.category === 'GENERAL_REQUIRED' ? '교양필수' : '교양선택'}
+                           course.category === 'MAJOR_ELECTIVE' ? '전공선택' :
+                           course.category === 'GENERAL_REQUIRED' ? '교양필수' : '교양선택'}
                         </p>
                       </div>
                     </div>

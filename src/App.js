@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; // Navigate 추가
 // Auth Pages
 import Login from './pages/auth/Login'; // Login 컴포넌트 임포트

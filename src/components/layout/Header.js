@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  BellIcon,
+import { 
+  BellIcon, 
   EnvelopeIcon,
-  MagnifyingGlassIcon
+  MagnifyingGlassIcon 
 } from '@heroicons/react/24/outline';
 
 const Header = () => {
@@ -13,14 +13,19 @@ const Header = () => {
         {/* 좌측: 로고 */}
         <div className="flex items-center space-x-8">
           <Link to="/" className="flex items-center space-x-2">
-            <img
-              src={require("../../assets/sesac-logo.png")}
-              alt="새싹 로고"
-              className="h-8"
+            <img 
+              src={require("../../assets/sesac-logo.png")} 
+              alt="새싹 로고" 
+              className="h-8" 
             />
             <span className="text-xl font-bold text-[#004EA2]">새싹대학교 LMS</span>
           </Link>
 
+          {/* 학기 선택 */}
+          <select className="text-sm border-gray-300 rounded-md focus:ring-[#004EA2] focus:border-[#004EA2]">
+            <option>2024년 1학기</option>
+            <option>2023년 2학기</option>
+          </select>
         </div>
 
         {/* 우측: 기능 버튼들 */}
@@ -50,9 +55,9 @@ const Header = () => {
           {/* 프로필 드롭다운 */}
           <div className="relative">
             <button className="flex items-center space-x-2 hover:bg-gray-100 rounded-lg p-2">
-              <img
-                src="/assets/profile-placeholder.png"
-                alt="프로필"
+              <img 
+                src="/assets/profile-placeholder.png" 
+                alt="프로필" 
                 className="w-8 h-8 rounded-full"
               />
               <span className="text-sm font-medium">홍길동</span>
