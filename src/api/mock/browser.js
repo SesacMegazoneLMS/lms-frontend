@@ -8,15 +8,14 @@ import { systemHandlers } from './handlers/systemHandlers';
 import { userHandlers } from './handlers/userHandlers';
 
 // 모든 핸들러를 하나의 배열로 결합
-export const handlers = [
+const handlers = [
   ...adminHandlers,
   ...courseHandlers,
   ...enrollmentHandlers,
   ...professorHandlers,
   ...studentHandlers,
   ...systemHandlers,
-  ...userHandlers
-  // ...existingHandlers,
+  ...userHandlers,
 ];
 
 // MSW 워커 설정

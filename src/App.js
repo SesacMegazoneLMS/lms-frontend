@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; // Navigate 추가
 // Auth Pages
 import Login from './pages/auth/Login'; // Login 컴포넌트 임포트
@@ -31,56 +32,52 @@ import Layout from './components/layout/Layout'; // Layout 컴포넌트 임포�
 // RoleBasedRoute 컴포넌트가 없으므로 주석 처리
 // import RoleBasedRoute from './components/RoleBasedRoute'; // RoleBasedRoute 컴포넌트 임포트
 
-import { AuthProvider } from './context/AuthContext';
-
 const App = () => {
   return (
-    <AuthProvider>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/auth">
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-        </Route>
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/auth">
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+      </Route>
 
-        {/* Student Routes */}
-        <Route path="/student" element={<Layout />}>
-          <Route path="dashboard" element={<StudentDashboard />} />
-          <Route path="enrollment" element={<CourseEnrollment />} />
-          <Route path="timetable" element={<StudentTimetable />} />
-          <Route path="courses" element={<StudentCourseList />} />
-          <Route path="courses/:id" element={<StudentCourseDetail />} />
-          <Route path="assignments" element={<StudentAssignmentList />} />
-          <Route path="assignments/submit/:id" element={<StudentAssignmentSubmit />} />
-          <Route path="grades" element={<StudentGradeList />} />
-        </Route>
+      {/* Student Routes */}
+      <Route path="/student" element={<Layout />}>
+        <Route path="dashboard" element={<StudentDashboard />} />
+        <Route path="enrollment" element={<CourseEnrollment />} />
+        <Route path="timetable" element={<StudentTimetable />} />
+        <Route path="courses" element={<StudentCourseList />} />
+        <Route path="courses/:id" element={<StudentCourseDetail />} />
+        <Route path="assignments" element={<StudentAssignmentList />} />
+        <Route path="assignments/submit/:id" element={<StudentAssignmentSubmit />} />
+        <Route path="grades" element={<StudentGradeList />} />
+      </Route>
 
-        {/* Professor Routes */}
-        <Route path="/professor" element={<Layout />}>
-          <Route path="dashboard" element={<ProfessorDashboard />} />
-          <Route path="grades" element={<ProfessorGrades />} />
-          <Route path="courses" element={<ProfessorCourseManagement />} />
-          <Route path="courses/create" element={<ProfessorCourseCreate />} />
-          <Route path="assignments" element={<ProfessorAssignmentManagement />} />
-          <Route path="assignments/grade/:id" element={<ProfessorGradeAssignment />} />
-          <Route path="students" element={<ProfessorStudentList />} />
-        </Route>
+      {/* Professor Routes */}
+      <Route path="/professor" element={<Layout />}>
+        <Route path="dashboard" element={<ProfessorDashboard />} />
+        <Route path="grades" element={<ProfessorGrades />} />
+        <Route path="courses" element={<ProfessorCourseManagement />} />
+        <Route path="courses/create" element={<ProfessorCourseCreate />} />
+        <Route path="assignments" element={<ProfessorAssignmentManagement />} />
+        <Route path="assignments/grade/:id" element={<ProfessorGradeAssignment />} />
+        <Route path="students" element={<ProfessorStudentList />} />
+      </Route>
 
-        {/* Admin Routes */}
-        <Route path="/admin" element={<Layout />}>
-          <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="users" element={<AdminUserManagement />} />
-          <Route path="users/create" element={<AdminUserCreate />} />
-          <Route path="courses" element={<AdminCourseManagement />} />
-          <Route path="settings" element={<AdminSettings />} />
-          <Route path="logs" element={<AdminLogs />} />
-        </Route>
+      {/* Admin Routes */}
+      <Route path="/admin" element={<Layout />}>
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="users" element={<AdminUserManagement />} />
+        <Route path="users/create" element={<AdminUserCreate />} />
+        <Route path="courses" element={<AdminCourseManagement />} />
+        <Route path="settings" element={<AdminSettings />} />
+        <Route path="logs" element={<AdminLogs />} />
+      </Route>
 
-        {/* Default Route */}
-        <Route path="/" element={<Navigate to="/auth/login" replace />} />
-        <Route path="*" element={<Navigate to="/auth/login" replace />} />
-      </Routes>
-    </AuthProvider>
+      {/* Default Route */}
+      <Route path="/" element={<Navigate to="/auth/login" replace />} />
+      <Route path="*" element={<Navigate to="/auth/login" replace />} />
+    </Routes>
   );
 };
 

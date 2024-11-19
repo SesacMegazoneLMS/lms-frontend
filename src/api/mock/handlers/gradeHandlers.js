@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { grades } from '../data/grades';
+import { courses } from '../data/courses';
 
 export const gradeHandlers = [
   // 단일 성적 조회
@@ -91,5 +92,15 @@ export const gradeHandlers = [
       );
     }
     return HttpResponse.json(grade.visibility);
+  }),
+
+  // 교수의 강의 목록 조회
+  http.get('/api/professors/:professorId/courses', ({ params }) => {
+    const { professorId } = params;
+    const professorCourses = courses.filter(course =>
+      course.openings.some(opening => opening.professorId === professorId)
+    );
+
+    return HttpResponse.json(professorCourses);
   })
 ];

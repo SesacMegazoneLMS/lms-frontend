@@ -4,32 +4,6 @@ import { http, HttpResponse } from 'msw'
  * 교수 관련 API 서비스
  */
 export const professorAPI = {
-
-
-  // 강의에 등록된 학생 목록 조회
-  getCourseStudents: async (courseId) => {
-    const response = await http.get(`/api/professor/courses/${courseId}/students`);
-    return response.data;
-  },
-
-  // 강의 성적 조회
-  getCourseGrades: async (courseId) => {
-    const response = await http.get(`/api/professor/courses/${courseId}/grades`);
-    return response.data;
-  },
-
-  // 성적 업데이트
-  updateGrades: async (courseId, gradeData) => {
-    const response = await http.put(`/api/professor/courses/${courseId}/grades`, gradeData);
-    return response.data;
-  },
-
-
-
-
-
-
-
   /**
    * 현재 로그인한 교수 정보 조회
    */

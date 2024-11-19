@@ -1,54 +1,25 @@
 import { scheduleStrings } from './schedules';
 export const courses = [
-
   {
-    id: 1,
-    name: '웹 프로그래밍',
-    professor: '김교수',
-    schedule: scheduleStrings[1],
-    room: '공학관 401호',
+    courseId: '11111111-aaaa-1111-1111-111111111111',
+    departmentId: '11111111-1111-1111-1111-111111111111',
+    courseCode: 'CS101',
+    courseName: '컴퓨터프로그래밍기초',
     credits: 3,
-    capacity: 40,
-    enrolled: 35,
-    description: '웹 개발의 기초를 배우는 과목',
-    category: 'MAJOR_REQUIRED',
-    semester: '2024-1',
-    status: 'active',
-    progress: 85,
-    attendance: 95
+    description: '프로그래밍 기초 과정',
+    openings: [
+      {
+        openingId: 'bbbbbbbb-1111-aaaa-1111-111111111111',
+        professorId: 'ffffffff-1111-1111-1111-111111111111',
+        year: 2024,
+        semester: '1',
+        maxStudents: 30,
+        currentStudents: 0,
+        status: 'OPENED'
+      }
+    ]
   },
-  {
-    id: 2,
-    name: '데이터베이스',
-    professor: '이교수',
-    schedule: scheduleStrings[2],
-    room: '공학관 502호',
-    credits: 3,
-    capacity: 35,
-    enrolled: 30,
-    description: '데이터베이스 설계와 SQL을 학습하는 과목',
-    category: 'MAJOR_REQUIRED',
-    semester: '2024-1',
-    status: 'active',
-    progress: 80,
-    attendance: 92
-  },
-  {
-    id: 3,
-    name: '알고리즘',
-    professor: '박교수',
-    schedule: scheduleStrings[3],
-    room: '공학관 303호',
-    credits: 3,
-    capacity: 45,
-    enrolled: 40,
-    description: '알고리즘 설계와 분석을 학습하는 과목',
-    category: 'MAJOR_REQUIRED',
-    semester: '2024-1',
-    status: 'active',
-    progress: 75,
-    attendance: 88
-  }
+  // ... 더 많은 강의 데이터
 ];
 
 // 교수별 강의 목록
