@@ -27,17 +27,27 @@ export const courseHandlers = [
     }
   }),
 
-  // 교수의 강의 목록 조회
-  http.get('/api/professors/courses', () => {
+  // 교수의 강의 목록 조회 (학기별)
+  http.get('/api/professors/courses', ({ request }) => {
     try {
-      const currentProfessor = professors[0]
-      return HttpResponse.json(currentProfessor.courses)
+      const url = new URL(request.url);
+      const year = url.searchParams.get('year');
+      const semester = url.searchParams.get('semester');
+      
+      const professor = professors[0];
+      
+      const filteredCourses = professor.courses.filter(course => 
+        course.year === parseInt(year) && 
+        course.semester === semester
+      );
+      
+      return HttpResponse.json(filteredCourses);
     } catch (error) {
-      console.error('Error processing request:', error)
+      console.error('Error in course handler:', error);
       return new HttpResponse(
         JSON.stringify({ message: '강의 목록을 불러오는데 실패했습니다.' }),
         { status: 500 }
-      )
+      );
     }
   }),
 
