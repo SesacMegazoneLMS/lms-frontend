@@ -70,10 +70,10 @@ const GradeStats = () => {
 
   const calculateTotalScore = (grade) => {
     return Math.round(
-      grade.assignmentScore * 0.3 +
-      grade.midtermScore * 0.3 +
-      grade.finalScore * 0.3 +
-      grade.attendanceScore * 0.1
+      grade.assignmentScore * 0.2 +
+      grade.midtermScore * 0.4 +
+      grade.finalScore * 0.4
+      // grade.attendanceScore * 0.1
     );
   };
 

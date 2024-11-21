@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const GradeAppeal = ({ gradeId }) => {
+const GradeAppeal = () => {
+  const { gradeId } = useParams();
+  const navigate = useNavigate();
   const [grade, setGrade] = useState(null);
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(true);
@@ -10,16 +13,29 @@ const GradeAppeal = ({ gradeId }) => {
   useEffect(() => {
     const fetchGrade = async () => {
       try {
-        const response = await axios.get(`/grade-appeals/grade/${gradeId}`);
-        setGrade(response.data);
+        const response = await axios.get(`/grades/${gradeId}`);
+        if (response.data) {
+          setGrade({
+            studentNumber: response.data.studentNumber,
+            studentName: response.data.studentName,
+            courseName: response.data.courseName,
+            assignScore: response.data.assignmentScore,
+            midtermScore: response.data.midtermScore,
+            finalScore: response.data.finalScore,
+            totalScore: response.data.totalScore
+          });
+        }
       } catch (err) {
+        console.error('Error fetching grade:', err);
         setError('성적 정보를 불러오는데 실패했습니다.');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchGrade();
+    if (gradeId) {
+      fetchGrade();
+    }
   }, [gradeId]);
 
   const handleSubmit = async (e) => {
@@ -28,12 +44,14 @@ const GradeAppeal = ({ gradeId }) => {
       await axios.post('/grade-appeals', {
         gradeId: gradeId,
         content: content,
-        requestedAssignScore: grade.assignScore,
+        requestedAssignScore: grade.assignmentScore,
         requestedMidtermScore: grade.midtermScore,
         requestedFinalScore: grade.finalScore
       });
       alert('이의신청이 제출되었습니다.');
+      navigate('/student/dashboard');
     } catch (error) {
+      console.error('Error submitting appeal:', error);
       alert('이의신청 제출에 실패했습니다.');
     }
   };

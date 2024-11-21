@@ -11,7 +11,7 @@ import StudentCourseList from './pages/student/courses/CourseList'; // StudentCo
 import StudentCourseDetail from './pages/student/courses/CourseDetail'; // StudentCourseDetail 컴포넌트 임포트
 import StudentAssignmentList from './pages/student/assignments/AssignmentList'; // StudentAssignmentList 컴포넌트 임포트
 import StudentAssignmentSubmit from './pages/student/assignments/AssignmentSubmit'; // StudentAssignmentSubmit 컴포넌트 임포트
-import StudentGradeList from './pages/student/grades/GradeList'; // StudentGradeList 컴포넌트 임포트
+import StudentGradeList from './pages/student/grades/StudentGradeList'; // StudentGradeList 컴포넌트 임포트
 // Professor Pages
 import ProfessorDashboard from './pages/professor/dashboard/Dashboard'; // ProfessorDashboard 컴포넌트 임포트
 import ProfessorCourseManagement from './pages/professor/courses/CourseManagement'; // ProfessorCourseManagement 컴포넌트 임포트
@@ -32,6 +32,8 @@ import Layout from './components/layout/Layout'; // Layout 컴포넌트 임포�
 // RoleBasedRoute 컴포넌트가 없으므로 주석 처리
 // import RoleBasedRoute from './components/RoleBasedRoute'; // RoleBasedRoute 컴포넌트 임포트
 
+import GradeAppeal from './pages/student/grades/components/GradeAppeal';
+
 const App = () => {
   return (
     <Routes>
@@ -51,6 +53,7 @@ const App = () => {
         <Route path="assignments" element={<StudentAssignmentList />} />
         <Route path="assignments/submit/:id" element={<StudentAssignmentSubmit />} />
         <Route path="grades" element={<StudentGradeList />} />
+        <Route path="grade-appeal/:gradeId" element={<GradeAppeal />} />
       </Route>
 
       {/* Professor Routes */}
