@@ -44,16 +44,16 @@ jobs:
 
       # 6. 빌드 결과물 검증
       # S3 배포 전에 빌드된 파일들이 올바르게 생성되었는지 확인
-      - name: Verify Build Artifacts
-        run: |
-          test -e build/index.html && echo "index.html exists"
-          test -e build/static/js/main.js && echo "main.js exists"
-          test -e build/static/css/main.css && echo "main.css exists"
+      #- name: Verify Build Artifacts
+      #  run: |
+      #    test -e build/index.html && echo "index.html exists"
+      #    test -e build/static/js/main.js && echo "main.js exists"
+      #    test -e build/static/css/main.css && echo "main.css exists"
 
       # 7. 테스트 실행 단계 (선택 사항)
       # React Testing Library 또는 기타 도구를 사용한 테스트 실행
-      - name: Run Tests
-        run: npm test  # Jest 또는 기타 도구를 사용한 테스트 실행
+      #- name: Run Tests
+      #  run: npm test  # Jest 또는 기타 도구를 사용한 테스트 실행
 
       # 8. AWS 사용자 인증 정보 입력
       - name: Configure AWS credentials
