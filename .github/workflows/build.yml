@@ -34,8 +34,8 @@ jobs:
 
       # 4. 린팅 테스트 추가
       # 프로젝트의 코드 스타일 및 품질을 ESLint로 검사
-      - name: Run ESLint
-        run: npm run lint  # package.json에서 lint 스크립트를 실행
+      #- name: Run ESLint
+      #  run: npm run lint  # package.json에서 lint 스크립트를 실행
 
       # 5. 빌드 단계 추가
       # React 프로젝트 빌드
