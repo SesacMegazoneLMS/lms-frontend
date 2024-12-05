@@ -1,70 +1,59 @@
-# Getting Started with Create React App123456
+# 서비스 소개
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<aside>
+💡 🌱새싹대학교🌱 LMS 학사관리시스템 서비스입니다. 
+새싹대학교의 학생, 교수, 관리자로 나뉘어서 필요한 기능을 만들었습니다.
+대표적으로 강의 개설, 수강신청, 시험, 출석, 성적 조회 등등 기능을 구성했고
+각각의 기능은 로그인한 계정의 권한에 따라 다르게 작동하도록 구현하였습니다.
 
-## Available Scripts
+</aside>
+---
 
-In the project directory, you can run:
+# 기술 스택
+## Frontend
+- **HTML**
+- **CSS (SCSS)**
+- **JavaScript**
+- **React.js**
+- **Tailwind CSS**
 
-### `npm start`
+## Backend
+- **Java**
+- **Spring**
+- **Spring Boot**
+- **Spring Security**
+- **PostgreSQL**
+- **Redis**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tools
+- **Figma**
+- **Git**
+- **SourceTree**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Collaboration
+- **GitHub**
+- **Notion**
+- **Slack**
+- **Trello**
 
-### `npm test`
+## Infra
+- **Docker**
+- **AWS EC2**
+- **AWS S3**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+| 이름 | 담당 |
+| --- | --- |
+| 신동진(리더) | 시험출제, 응시, 채점 |
+| 김경환 | 출석체크, 게시판 |
+| 박은화 | 강의개설 |
+| 성기범 | 수강신청 |
+| 정진욱 | 수강신청 |
+| 홍인표 | 성적 조회, 수정, 확정 |
+| 황신욱 | 인프라, 권한인증 |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[화면API기술명세서.pdf](https://www.notion.so/API-PDF-14e6137c2d3f809ba5b6ddefc98f24a7)
