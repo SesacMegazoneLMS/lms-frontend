@@ -1,3 +1,4 @@
+// Configure Display Languageimport React, { useState, useEffect } from 'react';
 import React, { useState, useEffect } from 'react';
 import { adminAPI } from '../../../api/services';
 
@@ -9,13 +10,13 @@ const activityConfig = {
     label: '수강신청'
   },
   'grade': {
-    color: 'green', 
+    color: 'green',
     icon: '📊',
     label: '성적등록'
   },
   'notice': {
     color: 'yellow',
-    icon: '📢', 
+    icon: '📢',
     label: '공지사항'
   }
 };
@@ -54,30 +55,30 @@ const Dashboard = () => {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-semibold text-gray-900 mb-6">관리자 대시보드</h1>
-      
+
       {/* 통계 카드 섹션 */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <StatCard 
-          title="총 학생 수" 
-          value={stats.totalStudents} 
+        <StatCard
+          title="총 학생 수"
+          value={stats.totalStudents}
           icon="👨‍🎓"
           color="blue"
         />
-        <StatCard 
-          title="총 교수 수" 
-          value={stats.totalProfessors} 
+        <StatCard
+          title="총 교수 수"
+          value={stats.totalProfessors}
           icon="👨‍🏫"
           color="green"
         />
-        <StatCard 
-          title="총 강의 수" 
-          value={stats.totalCourses} 
+        <StatCard
+          title="총 강의 수"
+          value={stats.totalCourses}
           icon="📚"
           color="yellow"
         />
-        <StatCard 
-          title="활성 수강신청" 
-          value={stats.activeEnrollments} 
+        <StatCard
+          title="활성 수강신청"
+          value={stats.activeEnrollments}
           icon="✅"
           color="indigo"
         />

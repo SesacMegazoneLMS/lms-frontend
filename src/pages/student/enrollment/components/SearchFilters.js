@@ -8,18 +8,18 @@ const SearchFilters = ({ onFilterChange }) => {
     grades: []
   });
 
-  useEffect(() => {
-    const fetchMetadata = async () => {
-      try {
-        const data = await courseAPI.getMetadata();
-        setMetadata(data);
-      } catch (error) {
-        console.error('Error fetching metadata:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchMetadata = async () => {
+  //     try {
+  //       const data = await courseAPI.getMetadata();
+  //       setMetadata(data);
+  //     } catch (error) {
+  //       console.error('Error fetching metadata:', error);
+  //     }
+  //   };
 
-    fetchMetadata();
-  }, []);
+  //   fetchMetadata();
+  // }, []);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

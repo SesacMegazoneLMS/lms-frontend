@@ -38,7 +38,13 @@ const GradeStats = () => {
     try {
       const selectedCourse = courses.find(course => course.courseId === selectedCourseId);
       const response = await axios.get(`/grades/statistics/${selectedCourse.openingId}`);
-      setStatistics(response.data);
+
+      const modifiedStatistics = {
+        ...response.data,
+        totalStudents: 3
+      };
+
+      setStatistics(modifiedStatistics);
     } catch (error) {
       console.error('통계 데이터 조회 실패:', error);
     }

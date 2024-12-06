@@ -7,7 +7,6 @@ import { enrollmentAPI } from './services/enrollmentAPI'
 import { assignmentAPI } from './services/assignmentAPI'
 import { professorAPI } from './services/professorAPI'
 import { systemAPI } from './services/systemAPI'
-import { gradeAPI } from './services/gradeAPI'
 
 // 모든 API 서비스를 named export로 다시 export
 export {
@@ -18,7 +17,5 @@ export {
   enrollmentAPI,
   assignmentAPI,
   professorAPI,
-  systemAPI,
-  gradeAPI
-
+  systemAPI
 }

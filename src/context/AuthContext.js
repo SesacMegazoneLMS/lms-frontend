@@ -4,38 +4,35 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({
-    id: 'ffffffff-1111-1111-1111-111111111111',
-    name: '김교수',
+    id: 'PROF001',
+    name: '김교수', 
     role: 'professor',
-    department: '컴퓨터공학과',
-    professorId: 'ffffffff-1111-1111-1111-111111111111'
+    department: '컴퓨터공학과'
   });
 
   const login = async (email, password) => {
     try {
       let userData;
-
+      
       if (email.includes('student')) {
         userData = {
-          id: 'aaaaaaaa-1111-1111-1111-111111111111',
+          id: 'STU001',
           name: '김학생',
-          role: 'student',
+          role: 'student', 
           department: '컴퓨터공학과',
           year: 3,
-          semester: '2024-1',
-          studentNumber: '2024001'
+          semester: '2024-1'
         };
       } else if (email.includes('professor')) {
         userData = {
-          id: 'ffffffff-1111-1111-1111-111111111111',
+          id: 'PROF001',
           name: '김교수',
           role: 'professor',
-          department: '컴퓨터공학과',
-          professorId: 'ffffffff-1111-1111-1111-111111111111'
+          department: '컴퓨터공학과'
         };
       } else if (email.includes('admin')) {
         userData = {
-          id: 'dddddddd-1111-1111-1111-111111111111', // UUID 형식으로 변경,
+          id: 'ADMIN001',
           name: '관리자',
           role: 'admin'
         };

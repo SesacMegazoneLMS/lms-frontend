@@ -1,42 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { enrollmentAPI, courseAPI } from '../../../../api/services';
+import useEnrollmentService from "../useEnrollmentService";
 
-const EnrollmentHistory = () => {
+const EnrollmentHistory = ({ studentId }) => {
   const [selectedSemester, setSelectedSemester] = useState('2024-1');
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [enrollments, setEnrollments] = useState([]);
 
+  const { getEnrollment, getTimeTableData } = useEnrollmentService();
+
+  // 내가 신청한 강의의 상태를 새로 가져오는 함수
   useEffect(() => {
-    const fetchHistory = async () => {
-      setLoading(true);
-      try {
-        const enrollments = await enrollmentAPI.getHistory(selectedSemester);
-        
-        // 각 수강신청 항목에 대한 강의 정보 가져오기
-        const coursesPromises = enrollments.map(enrollment => 
-          courseAPI.getCourse(enrollment.courseId)
-        );
-        
-        const courses = await Promise.all(coursesPromises);
-        
-        // 수강신청 정보와 강의 정보 합치기
-        const fullHistory = enrollments.map((enrollment, index) => ({
-          ...enrollment,
-          ...courses[index]
-        }));
-        
-        setHistory(fullHistory);
-      } catch (err) {
-        setError('수강신청 내역을 불러오는데 실패했습니다.');
-        console.error('Error fetching history:', err);
-      } finally {
-        setLoading(false);
+    const getEnrollmentInComponent = async () => {
+      try{
+        const result = await getEnrollment(studentId);
+        //console.log("Enrollment에서부터 보내줄 result : " + JSON.stringify(result));
+        setEnrollments(result);
+      }catch(error){
+        console.error("신청 강의 정보를 가져오는 중 오류 발생 : ", error);
       }
     };
+    getEnrollmentInComponent();
+  }, [studentId]);
 
-    fetchHistory();
-  }, [selectedSemester]);
+  const cancelEnrollment = async (studentId, enrollmentId) => {
+    try {
+      console.log("aaa : " + enrollmentId)
+      await enrollmentAPI.deleteCourse(enrollmentId);
+      const updatedEnrollments = await getEnrollment(studentId);
+      setEnrollments(updatedEnrollments);
+      await getTimeTableData(studentId);
+    } catch (err) {
+      console.error("수강신청 취소 중 오류 발생:", err);
+      setError(err);
+    }
+  }
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -67,11 +67,11 @@ const EnrollmentHistory = () => {
     return schedule.map(s => `${s.day} ${s.startTime}-${s.endTime} (${s.room})`).join(', ');
   };
 
-  const totalCredits = history.reduce((sum, course) => sum + course.credits, 0);
+  const totalCredits = enrollments.reduce((sum, enrollment) => sum + enrollment.credit, 0);
 
-  if (loading) {
-    return <div className="text-center py-8">로딩 중...</div>;
-  }
+  // if (loading) {
+  //   return <div className="text-center py-8">로딩 중...</div>;
+  // }
 
   if (error) {
     return <div className="text-center py-8 text-red-600">{error}</div>;
@@ -92,13 +92,13 @@ const EnrollmentHistory = () => {
             <option value="2023-1">2023년 1학기</option>
           </select>
           <div className="text-sm text-gray-600">
-            총 {history.length}과목 / {totalCredits}학점
+            총 {enrollments.length}과목 / {totalCredits}학점
           </div>
         </div>
       </div>
 
       {/* 수강신청 내역 */}
-      {history.length === 0 ? (
+      {enrollments.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
           수강신청 내역이 없습니다.
         </div>
@@ -106,56 +106,75 @@ const EnrollmentHistory = () => {
         <div className="bg-white shadow overflow-hidden rounded-lg">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
-              <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  과목코드
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  과목명
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  담당교수
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  학점
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  강의시간
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  상태
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  신청일시
-                </th>
-              </tr>
+            <tr>
+              <th scope="col"
+                  className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                과목코드
+              </th>
+              <th scope="col"
+                  className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                과목명
+              </th>
+              <th scope="col"
+                  className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                담당교수
+              </th>
+              <th scope="col"
+                  className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                요일
+              </th>
+              <th scope="col"
+                  className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                강의시간
+              </th>
+              {/*<th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">*/}
+              {/*  신청일시*/}
+              {/*</th>*/}
+              <th scope="col"
+                  className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                학점
+              </th>
+              <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              </th>
+            </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {history.map((course) => (
-                <tr key={course.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {course.code}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {course.name}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {course.professor}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {course.credits}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {formatSchedule(course.schedule)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {getStatusBadge(course.status)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {course.enrolledAt}
-                  </td>
+            {enrollments.map((enrollment) => (
+                <tr key={enrollment.enrollmentId}>
+                    <td className="px-6 py-4 text-center whitespace-nowrap text-sm font-medium text-gray-900">
+                      {enrollment.courseCode}
+                    </td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-500">
+                      {enrollment.courseName}
+                    </td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-500">
+                      {enrollment.professorName}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                      {enrollment.day || ''}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                      {enrollment.startTime ? enrollment.startTime.split(':').slice(0, 2).join(':') : ''} - {enrollment.endTime ? enrollment.endTime.split(':').slice(0, 2).join(':') : ''}
+                    </td>
+                    <td className="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-500">
+                    {enrollment.credit}
+                    </td>
+                    {/*<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">*/}
+                    {/*  {getStatusBadge(enrollment.status)}*/}
+                    {/*</td>*/}
+                    {/*<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">*/}
+                    {/*  {enrollment.enrolledAt}*/}
+                    {/*</td>*/}
+                    <td className="px-6 py-4 text-center flex justify-center items-center">
+                      <button
+                        className="bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm py-1 px-2"
+                        onClick={() => cancelEnrollment(studentId, enrollment.enrollmentId)}
+                      >
+                      신청취소
+                      </button>
+                    </td>
                 </tr>
-              ))}
+            ))}
             </tbody>
           </table>
         </div>
@@ -165,7 +184,7 @@ const EnrollmentHistory = () => {
       <div className="bg-gray-50 p-4 rounded-lg">
         <h4 className="text-sm font-medium text-gray-800 mb-2">수강신청 내역 안내</h4>
         <ul className="text-sm text-gray-600 list-disc list-inside space-y-1">
-          <li>수강신청 변경기간: 2024.03.02 ~ 2024.03.08</li>
+        <li>수강신청 변경기간: 2024.03.02 ~ 2024.03.08</li>
           <li>수강신청 취소는 변경기간 내에만 가능합니다.</li>
           <li>문의사항은 학사지원팀으로 연락주세요.</li>
         </ul>
